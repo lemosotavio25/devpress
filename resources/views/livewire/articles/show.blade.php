@@ -77,8 +77,10 @@
             </header>
 
             {{-- Conteúdo --}}
-            <div class="prose prose-lg dark:prose-invert max-w-full overflow-x-auto break-words">
-                {!! $article->content !!}
+            <div class="ql-container ql-snow">
+                <div class="ql-editor">
+                    {!! $article->content !!}
+                </div>
             </div>
 
 
