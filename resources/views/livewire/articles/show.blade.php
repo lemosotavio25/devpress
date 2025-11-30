@@ -77,9 +77,10 @@
             </header>
 
             {{-- Conteúdo --}}
-            <div class="prose prose-lg dark:prose-invert max-w-none">
+            <div class="prose prose-lg dark:prose-invert max-w-full overflow-x-auto break-words">
                 {!! $article->content !!}
             </div>
+
 
             {{-- Ações --}}
             @if(!Auth::user()->isAdmin())
