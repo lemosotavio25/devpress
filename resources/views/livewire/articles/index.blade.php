@@ -230,9 +230,9 @@
         <div class="space-y-4">
             @forelse($articles as $article)
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
-                    <div class="flex flex-col sm:flex-row">
+                    <div class="flex flex-col md:flex-row">
                         {{-- Imagem --}}
-                        <div class="w-full sm:w-64 h-48 sm:h-auto overflow-hidden bg-gray-200 dark:bg-gray-700">
+                        <div class="hidden md:block md:w-64 h-48 md:h-auto flex-shrink-0 overflow-hidden bg-gray-200 dark:bg-gray-700">
                             <img 
                                 src="{{ $article->cover_image_path ? asset('storage/' . $article->cover_image_path) : asset('article_fb.png') }}" 
                                 alt="{{ $article->title }}"
@@ -241,10 +241,10 @@
                         </div>
 
                         {{-- Conteúdo --}}
-                        <div class="flex-1 p-6">
+                        <div class="flex-1 p-4 md:p-6">
                             <div class="flex items-start justify-between mb-3">
-                                <a href="{{ route('articles.show', $article->slug) }}" wire:navigate>
-                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                                <a href="{{ route('articles.show', $article->slug) }}" wire:navigate class="flex-1">
+                                    <h3 class="text-lg md:text-xl font-bold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                                         {{ $article->title }}
                                     </h3>
                                 </a>
@@ -287,7 +287,7 @@
                                 @endif
                             </div>
 
-                            <div class="flex gap-2">
+                            <div class="flex flex-wrap gap-2">
                                 <a
                                     href="{{ route('articles.show', $article->slug) }}"
                                     wire:navigate
@@ -297,7 +297,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                                     </svg>
-                                    Ver
+                                    <span class="hidden sm:inline">Ver</span>
                                 </a>
 
                                 @if(Auth::user()->isAdmin() && $article->user_id == Auth::id())
@@ -305,30 +305,30 @@
                                         wire:click="$dispatch('openArticleModal', { articleId: {{ $article->id }} })"
                                         class="inline-flex items-center px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150"
                                     >
-                                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-4 h-4 sm:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                         </svg>
-                                        Editar
+                                        <span class="hidden sm:inline">Editar</span>
                                     </button>
                                 @elseif(!Auth::user()->isAdmin())
                                     <button
                                         wire:click="$dispatch('openArticleModal', { articleId: {{ $article->id }} })"
                                         class="inline-flex items-center px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150"
                                     >
-                                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-4 h-4 sm:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                         </svg>
-                                        Editar
+                                        <span class="hidden sm:inline">Editar</span>
                                     </button>
 
                                     <button
                                         wire:click="$dispatch('openDeleteArticleModal', { articleId: {{ $article->id }} })"
                                         class="inline-flex items-center px-3 py-2 border border-red-300 dark:border-red-700 rounded-lg text-sm font-medium text-red-700 dark:text-red-400 bg-white dark:bg-gray-700 hover:bg-red-50 dark:hover:bg-red-900/20 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition duration-150"
                                     >
-                                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-4 h-4 sm:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                         </svg>
-                                        Excluir
+                                        <span class="hidden sm:inline">Excluir</span>
                                     </button>
                                 @endif
 
@@ -337,10 +337,10 @@
                                         wire:click="$dispatch('openDeleteArticleModal', { articleId: {{ $article->id }} })"
                                         class="inline-flex items-center px-3 py-2 border border-red-300 dark:border-red-700 rounded-lg text-sm font-medium text-red-700 dark:text-red-400 bg-white dark:bg-gray-700 hover:bg-red-50 dark:hover:bg-red-900/20 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition duration-150"
                                     >
-                                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-4 h-4 sm:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                         </svg>
-                                        Excluir
+                                        <span class="hidden sm:inline">Excluir</span>
                                     </button>
                                 @endif
                             </div>
