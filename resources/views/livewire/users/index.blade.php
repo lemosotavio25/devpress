@@ -126,7 +126,8 @@
 
     {{-- listagem de usuários --}}
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
-        <div class="overflow-x-auto">
+        {{-- Tabela para desktop --}}
+        <div class="hidden md:block overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead class="bg-gray-50 dark:bg-gray-700">
                     <tr>
@@ -291,6 +292,110 @@
                     @endforelse
                 </tbody>
             </table>
+        </div>
+
+        {{-- Cards para mobile --}}
+        <div class="md:hidden divide-y divide-gray-200 dark:divide-gray-700">
+            @forelse($users as $user)
+                <div class="p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="flex-1">
+                            <h3 class="text-sm font-semibold text-gray-900 dark:text-white">{{ $user->name }}</h3>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{{ $user->email }}</p>
+                        </div>
+                        @if(auth()->user()->isAdmin())
+                            <div class="flex gap-1 ml-2">
+                                <button
+                                    wire:click="$dispatch('openUserModal', { userId: {{ $user->id }} })"
+                                    class="p-2 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 text-blue-700 dark:text-blue-400 rounded-lg transition-colors"
+                                    title="Editar"
+                                >
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                    </svg>
+                                </button>
+                                @if($user->id !== auth()->id())
+                                    <button
+                                        wire:click="$dispatch('openDeleteUserModal', { userId: {{ $user->id }} })"
+                                        class="p-2 bg-red-100 hover:bg-red-200 dark:bg-red-900/30 dark:hover:bg-red-900/50 text-red-700 dark:text-red-400 rounded-lg transition-colors"
+                                        title="Excluir"
+                                    >
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        </svg>
+                                    </button>
+                                @endif
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="flex flex-wrap gap-2 mb-2">
+                        @if($user->role === 'admin')
+                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400">
+                                Admin
+                            </span>
+                        @else
+                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400">
+                                Developer
+                            </span>
+                        @endif
+
+                        @if($user->seniority)
+                            @php
+                                $seniorityColors = [
+                                    'jr' => 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
+                                    'pl' => 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
+                                    'sr' => 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
+                                ];
+                                $seniorityLabels = ['jr' => 'Junior', 'pl' => 'Pleno', 'sr' => 'Senior'];
+                            @endphp
+                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium {{ $seniorityColors[$user->seniority] }}">
+                                {{ $seniorityLabels[$user->seniority] }}
+                            </span>
+                        @endif
+                    </div>
+
+                    @if($user->skills && count($user->skills) > 0)
+                        <div class="flex flex-wrap gap-1 mb-3">
+                            @foreach(array_slice($user->skills, 0, 4) as $skill)
+                                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                                    {{ $skill }}
+                                </span>
+                            @endforeach
+                            @if(count($user->skills) > 4)
+                                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                                    +{{ count($user->skills) - 4 }}
+                                </span>
+                            @endif
+                        </div>
+                    @endif
+
+                    <div class="flex items-center gap-4 text-xs text-gray-600 dark:text-gray-400">
+                        <div class="flex items-center">
+                            <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            <span class="font-medium">{{ $user->articles_count }}</span>
+                            <span class="ml-1">artigos</span>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            </svg>
+                            <span class="font-medium">{{ $user->contributed_articles_count }}</span>
+                            <span class="ml-1">contrib.</span>
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <div class="px-6 py-16 text-center">
+                    <svg class="mx-auto h-16 w-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                    <h3 class="mt-4 text-lg font-medium text-gray-900 dark:text-white">Nenhum usuário encontrado</h3>
+                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Tente ajustar os filtros de busca.</p>
+                </div>
+            @endforelse
         </div>
     </div>
 
