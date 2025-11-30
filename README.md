@@ -241,7 +241,6 @@ ltcloud/
 - ✅ Contador de desenvolvedores associados por artigo
 - ✅ Preview de imagem ao fazer upload
 - ✅ Imagem fallback automática para artigos sem capa
-- ✅ Skeleton loading states
 - ✅ Ícones SVG inline
 
 ### Funcionalidades Interativas
@@ -340,13 +339,6 @@ chown -R www-data:www-data storage bootstrap/cache
 - ✅ Factory Pattern (Seeders)
 - ✅ Repository Pattern (Eloquent)
 
-### Convenções Laravel
-- PSR-4 Autoloading
-- PSR-12 Coding Style
-- Eloquent Naming Conventions
-- Blade Directives
-- Livewire Lifecycle Hooks
-
 ## 🐛 Troubleshooting
 
 ### Problema: Imagens não aparecem
@@ -372,10 +364,3 @@ npm install
 npm run dev
 ```
 
-## 📚 Documentação Adicional
-
-- [Laravel 11 Docs](https://laravel.com/docs/11.x)
-- [Livewire 3 Docs](https://livewire.laravel.com/docs/quickstart)
-- [Tailwind CSS Docs](https://tailwindcss.com/docs)
-- [Quill.js Docs](https://quilljs.com/docs/quickstart)
-- [Alpine.js Docs](https://alpinejs.dev/start-here)
