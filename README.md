@@ -2,6 +2,12 @@
 
 Sistema de gerenciamento de artigos técnicos desenvolvido com Laravel 12 e Livewire, com sistema de autenticação, roles (Admin/Developer) e gestão completa de conteúdo.
 
+## 🌐 Demo Online
+
+**🔗 [https://devpress.adoroautomacao.com.br/](https://devpress.adoroautomacao.com.br/)**
+
+Acesse a aplicação em produção e teste todas as funcionalidades!
+
 ## 🚀 Tecnologias
 
 - **Laravel 11** - Framework PHP
