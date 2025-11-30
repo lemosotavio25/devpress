@@ -83,4 +83,12 @@ class User extends Authenticatable
                     ->withTimestamps();
     }
 
+    /**
+     * Addresses associated with this user
+     */
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
+    }
+
 }

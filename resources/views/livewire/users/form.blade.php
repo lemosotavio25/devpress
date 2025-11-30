@@ -173,6 +173,132 @@
                                     @endif
                                     @error('skills') <span class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</span> @enderror
                                 </div>
+
+                                {{-- Seção de Endereço --}}
+                                <div class="border-t border-gray-200 dark:border-gray-600 pt-6 mt-6">
+                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                                        Endereço
+                                    </h3>
+
+                                    {{-- CEP --}}
+                                    <div class="mb-4">
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                            CEP
+                                        </label>
+                                        <div class="flex gap-2">
+                                            <input 
+                                                type="text" 
+                                                wire:model.defer="cep" 
+                                                wire:keydown.enter.prevent="searchCep"
+                                                maxlength="9"
+                                                placeholder="00000-000"
+                                                class="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                            >
+                                            <button
+                                                type="button"
+                                                wire:click="searchCep"
+                                                wire:loading.attr="disabled"
+                                                wire:target="searchCep"
+                                                class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                            >
+                                                <span wire:loading.remove wire:target="searchCep">Buscar</span>
+                                                <span wire:loading wire:target="searchCep">
+                                                    <svg class="animate-spin h-5 w-5 inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                    </svg>
+                                                </span>
+                                            </button>
+                                        </div>
+                                        @error('cep') <span class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</span> @enderror
+                                    </div>
+
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        {{-- Logradouro --}}
+                                        <div class="md:col-span-2">
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                                Logradouro
+                                            </label>
+                                            <input 
+                                                type="text" 
+                                                wire:model.defer="logradouro" 
+                                                class="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                                placeholder="Rua, Avenida, etc."
+                                            >
+                                            @error('logradouro') <span class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</span> @enderror
+                                        </div>
+
+                                        {{-- Complemento --}}
+                                        <div class="md:col-span-2">
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                                Complemento
+                                            </label>
+                                            <input 
+                                                type="text" 
+                                                wire:model.defer="complemento" 
+                                                class="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                                placeholder="Apto, Bloco, etc."
+                                            >
+                                            @error('complemento') <span class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</span> @enderror
+                                        </div>
+
+                                        {{-- Bairro --}}
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                                Bairro
+                                            </label>
+                                            <input 
+                                                type="text" 
+                                                wire:model.defer="bairro" 
+                                                class="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                                placeholder="Bairro"
+                                            >
+                                            @error('bairro') <span class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</span> @enderror
+                                        </div>
+
+                                        {{-- Localidade --}}
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                                Cidade
+                                            </label>
+                                            <input 
+                                                type="text" 
+                                                wire:model.defer="localidade" 
+                                                class="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                                placeholder="Cidade"
+                                            >
+                                            @error('localidade') <span class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</span> @enderror
+                                        </div>
+
+                                        {{-- Estado --}}
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                                Estado
+                                            </label>
+                                            <input 
+                                                type="text" 
+                                                wire:model.defer="estado" 
+                                                class="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                                placeholder="Estado"
+                                            >
+                                            @error('estado') <span class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</span> @enderror
+                                        </div>
+
+                                        {{-- Região --}}
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                                Região
+                                            </label>
+                                            <input 
+                                                type="text" 
+                                                wire:model.defer="regiao" 
+                                                class="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                                placeholder="Região"
+                                            >
+                                            @error('regiao') <span class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</span> @enderror
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
