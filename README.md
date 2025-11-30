@@ -122,7 +122,7 @@ Acesse: `http://localhost:8000`
 ## 🔑 Credenciais de Acesso
 
 ### Admin
-- **Email**: test@example.com
+- **Email**: admin@example.com
 - **Senha**: password
 - **Permissões**: Acesso total - visualiza e gerencia todos os artigos
 - **Role**: admin
