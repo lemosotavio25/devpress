@@ -328,5 +328,3 @@ php artisan about                    # Informações do sistema
 
 ### Gestão de Usuários
 ![Usuários](https://devpress.adoroautomacao.com.br/screenshots/usuarios.png)
-
-> **Nota**: Adicione os screenshots na pasta `public/screenshots/` com os nomes correspondentes para visualizar as imagens.
