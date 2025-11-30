@@ -8,21 +8,9 @@ Sistema de gerenciamento de artigos técnicos desenvolvido com Laravel 12 e Live
 
 Acesse a aplicação em produção e teste todas as funcionalidades!
 
-## 📸 Preview da Aplicação
-
-### Dashboard de Artigos
-![Dashboard](https://devpress.adoroautomacao.com.br/article_fb.png)
-
-### Interface Principal
-<p align="center">
-  <img src="https://devpress.adoroautomacao.com.br/article_fb.png" alt="Interface Principal" width="800">
-</p>
-
-> **Nota**: Para adicionar screenshots reais, crie uma pasta `public/screenshots` e adicione as imagens. Depois, atualize os links acima.
-
 ## 🚀 Tecnologias
 
-- **Laravel 11** - Framework PHP
+- **Laravel 12** - Framework PHP
 - **Livewire 3** - Componentes reativos full-stack
 - **Tailwind CSS** - Framework CSS utility-first
 - **Alpine.js** - Framework JavaScript leve (incluso no Livewire)
