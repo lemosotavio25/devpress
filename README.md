@@ -1,6 +1,6 @@
 # LT Cloud - Laravel + Livewire
 
-Sistema de gerenciamento de artigos técnicos desenvolvido com Laravel 11 e Livewire 3, com sistema de autenticação, roles (Admin/Developer) e gestão completa de conteúdo.
+Sistema de gerenciamento de artigos técnicos desenvolvido com Laravel 12 e Livewire, com sistema de autenticação, roles (Admin/Developer) e gestão completa de conteúdo.
 
 ## 🚀 Tecnologias
 
