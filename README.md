@@ -8,6 +8,18 @@ Sistema de gerenciamento de artigos técnicos desenvolvido com Laravel 12 e Live
 
 Acesse a aplicação em produção e teste todas as funcionalidades!
 
+## 📸 Preview da Aplicação
+
+### Dashboard de Artigos
+![Dashboard](https://devpress.adoroautomacao.com.br/article_fb.png)
+
+### Interface Principal
+<p align="center">
+  <img src="https://devpress.adoroautomacao.com.br/article_fb.png" alt="Interface Principal" width="800">
+</p>
+
+> **Nota**: Para adicionar screenshots reais, crie uma pasta `public/screenshots` e adicione as imagens. Depois, atualize os links acima.
+
 ## 🚀 Tecnologias
 
 - **Laravel 11** - Framework PHP
@@ -314,3 +326,19 @@ php artisan about                    # Informações do sistema
 - **Models**: Eloquent ORM com relacionamentos
 - **Views**: Blade templates + Livewire components
 - **Controllers**: Substituídos por Livewire components (full-stack)
+
+## 📸 Screenshots
+
+### Login
+![Login](https://devpress.adoroautomacao.com.br/screenshots/login.png)
+
+### Dashboard
+![Dashboard](https://devpress.adoroautomacao.com.br/screenshots/dashboard.png)
+
+### Gestão de Artigos
+![Artigos](https://devpress.adoroautomacao.com.br/screenshots/artigos.png)
+
+### Gestão de Usuários
+![Usuários](https://devpress.adoroautomacao.com.br/screenshots/usuarios.png)
+
+> **Nota**: Adicione os screenshots na pasta `public/screenshots/` com os nomes correspondentes para visualizar as imagens.
