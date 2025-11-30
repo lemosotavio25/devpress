@@ -1,10 +1,23 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     {{-- cabeçalho --}}
-    <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Gestão de Usuários</h1>
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            Gerencie todos os usuários da plataforma e visualize suas estatísticas.
-        </p>
+    <div class="mb-8 flex justify-between items-start">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Gestão de Usuários</h1>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                Gerencie todos os usuários da plataforma e visualize suas estatísticas.
+            </p>
+        </div>
+        @if(auth()->user()->isAdmin())
+            <button
+                wire:click="$dispatch('openUserModal')"
+                class="inline-flex items-center px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg shadow-sm transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+            >
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                </svg>
+                Novo Usuário
+            </button>
+        @endif
     </div>
 
     {{-- filtros --}}
@@ -135,6 +148,11 @@
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                             Contribuições
                         </th>
+                        @if(auth()->user()->isAdmin())
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                Ações
+                            </th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
@@ -231,10 +249,38 @@
                                     </span>
                                 </div>
                             </td>
+                            @if(auth()->user()->isAdmin())
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <button
+                                            wire:click="$dispatch('openUserModal', { userId: {{ $user->id }} })"
+                                            class="inline-flex items-center px-3 py-1.5 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 text-blue-700 dark:text-blue-400 font-medium rounded-lg transition-colors"
+                                            title="Editar usuário"
+                                        >
+                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                            </svg>
+                                            Editar
+                                        </button>
+                                        @if($user->id !== auth()->id())
+                                            <button
+                                                wire:click="$dispatch('openDeleteUserModal', { userId: {{ $user->id }} })"
+                                                class="inline-flex items-center px-3 py-1.5 bg-red-100 hover:bg-red-200 dark:bg-red-900/30 dark:hover:bg-red-900/50 text-red-700 dark:text-red-400 font-medium rounded-lg transition-colors"
+                                                title="Excluir usuário"
+                                            >
+                                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                </svg>
+                                                Excluir
+                                            </button>
+                                        @endif
+                                    </div>
+                                </td>
+                            @endif
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="px-6 py-16 text-center">
+                            <td colspan="{{ auth()->user()->isAdmin() ? '7' : '6' }}" class="px-6 py-16 text-center">
                                 <svg class="mx-auto h-16 w-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
                                 </svg>
@@ -252,6 +298,33 @@
     @if($users->hasPages())
         <div class="mt-6">
             {{ $users->links() }}
+        </div>
+    @endif
+
+    {{-- componentes de form e delete --}}
+    <livewire:users.form />
+    <livewire:users.delete />
+
+    {{-- mensagens flash --}}
+    @if(session()->has('message'))
+        <div 
+            x-data="{ show: true }"
+            x-show="show"
+            x-init="setTimeout(() => show = false, 3000)"
+            class="fixed bottom-4 right-4 z-50 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg"
+        >
+            {{ session('message') }}
+        </div>
+    @endif
+
+    @if(session()->has('error'))
+        <div 
+            x-data="{ show: true }"
+            x-show="show"
+            x-init="setTimeout(() => show = false, 3000)"
+            class="fixed bottom-4 right-4 z-50 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg"
+        >
+            {{ session('error') }}
         </div>
     @endif
 </div>
