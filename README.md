@@ -302,65 +302,9 @@ php artisan route:list               # Listar todas as rotas
 php artisan about                    # Informações do sistema
 ```
 
-## 🚀 Deploy em Produção
-
-### Checklist Pré-Deploy
-
-2. **Otimizações**
-```bash
-composer install --optimize-autoloader --no-dev
-npm run build
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-```
-
-3. **Migrations**
-```bash
-php artisan migrate --force
-```
-
-4. **Storage e Permissões**
-```bash
-php artisan storage:link
-chmod -R 775 storage bootstrap/cache
-chown -R www-data:www-data storage bootstrap/cache
-```
-
 ## 🏗️ Arquitetura e Padrões
 
 ### MVC + Livewire
 - **Models**: Eloquent ORM com relacionamentos
 - **Views**: Blade templates + Livewire components
 - **Controllers**: Substituídos por Livewire components (full-stack)
-
-### Princípios Aplicados
-- ✅ Policy-based Authorization
-- ✅ Factory Pattern (Seeders)
-- ✅ Repository Pattern (Eloquent)
-
-## 🐛 Troubleshooting
-
-### Problema: Imagens não aparecem
-```bash
-php artisan storage:link
-```
-
-### Problema: Erro de permissão no storage
-```bash
-chmod -R 775 storage bootstrap/cache
-```
-
-### Problema: Migrations falham
-```bash
-php artisan migrate:fresh --seed
-```
-
-### Problema: npm run dev trava
-```bash
-# Limpar node_modules e reinstalar
-rm -rf node_modules package-lock.json
-npm install
-npm run dev
-```
-
